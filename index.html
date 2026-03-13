@@ -51,7 +51,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter text-white cursor-pointer flex items-center gap-3 code-font" onclick="window.scrollTo(0,0)">
+                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter text-white cursor-pointer flex items-center gap-3 code-font" onclick="window.location.hash='#home'">
                     <img src="logo.png" alt="C Square Logo" class="w-9 h-9 object-cover rounded-md shadow-sm border border-slate-700">
                     <span><span class="text-sky-400">&lt;</span>C_Square<span class="text-sky-400">/&gt;</span></span>
                 </div>
@@ -59,9 +59,9 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#events" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Events</a>
-                        <a href="#team" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                        <a href="#home" class="nav-link text-sky-400 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#events" class="nav-link text-slate-200 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Events</a>
+                        <a href="#team" class="nav-link text-slate-200 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Team</a>
                         <a href="#contact" class="bg-sky-500/10 text-sky-400 hover:bg-sky-500 hover:text-white transition-all px-4 py-2 rounded-full text-sm font-semibold border border-sky-500/50">Join Us</a>
                     </div>
                 </div>
@@ -78,22 +78,22 @@
         <!-- Mobile Menu (Hidden by default) -->
         <div class="md:hidden hidden bg-slate-900 border-b border-slate-800" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 code-font text-sm">
-                <a href="#home" class="block hover:bg-slate-800 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/home</a>
-                <a href="#events" class="block hover:bg-slate-800 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/events</a>
-                <a href="#team" class="block hover:bg-slate-800 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/team</a>
+                <a href="#home" class="nav-link-mobile block hover:bg-slate-800 text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/home</a>
+                <a href="#events" class="nav-link-mobile block hover:bg-slate-800 text-slate-200 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/events</a>
+                <a href="#team" class="nav-link-mobile block hover:bg-slate-800 text-slate-200 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/team</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 flex items-center justify-center min-h-screen overflow-hidden bg-grid">
-        <!-- Glow effect behind hero -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+    <!-- Main Content Container for SPA -->
+    <main id="app-content">
 
-        <div class="max-w-7xl mx-auto px-4 relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                
-                <!-- Left: Text -->
+        <!-- Home View -->
+        <div id="home-view" class="page-view block">
+
+            <!-- Hero Section -->
+            <section id="home" class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 flex items-center justify-center min-h-screen overflow-hidden bg-grid">
+                <!-- Glow effect behind hero -->
                 <div class="text-left">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-sky-400 text-xs sm:text-sm font-medium mb-6 backdrop-blur-sm code-font">
                         <span class="text-green-400">~</span> ./start_club.sh
@@ -170,15 +170,15 @@
             </div>
         </div>
     </section>
+        </div>
 
-    <!-- Events Section -->
-    <section id="events" class="py-24 bg-slate-950 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 code-font">&lt;<span class="text-sky-400">Flagship_Events</span> /&gt;</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto code-font text-sm">/* Discover the hackathons, workshops, and competitions where we turn ideas into reality. */</p>
-            </div>
-            
+        <!-- Events View -->
+        <div id="events-view" class="page-view hidden">
+
+            <!-- Events Section -->
+            <section id="events" class="pt-32 pb-24 bg-slate-950 relative min-h-screen">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
             <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
                 <!-- Zinnovatio Card -->
                 <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/10">
@@ -212,15 +212,15 @@
             </div>
         </div>
     </section>
+        </div>
 
-    <!-- Core Team Section -->
-    <section id="team" class="py-24 relative overflow-hidden">
-        <!-- Background accents -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <!-- Team View -->
+        <div id="team-view" class="page-view hidden">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="mb-16">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 code-font"><span class="text-pink-500">class</span> <span class="text-[#4ec9b0]">Leadership</span> {</h2>
+            <!-- Core Team Section -->
+            <section id="team" class="pt-32 pb-24 relative overflow-hidden min-h-screen">
+                <!-- Background accents -->
+                <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
                 <p class="text-slate-500 max-w-2xl mx-auto code-font text-sm">/* The minds driving the technical vision and operations of C Square. */</p>
             </div>
             
@@ -261,6 +261,9 @@
             </div>
         </div>
     </section>
+        </div>
+
+    </main>
 
     <!-- Footer -->
     <footer id="contact" class="bg-slate-950 pt-16 pb-8 border-t border-slate-800">
@@ -332,6 +335,67 @@
                 menu.classList.add('hidden');
             });
         });
+
+        // --- Single Page Application Routing Logic ---
+        const pageRoutes = ['#home', '#events', '#team'];
+        
+        function handleRouting() {
+            let hash = window.location.hash;
+            
+            // Default to home if no hash or invalid direct page hash
+            if (!hash) {
+                hash = '#home';
+                window.history.replaceState(null, null, '#home');
+            }
+
+            // Only switch views if the hash matches a page route
+            if (pageRoutes.includes(hash)) {
+                // Hide all views
+                document.querySelectorAll('.page-view').forEach(view => {
+                    view.classList.add('hidden');
+                    view.classList.remove('block');
+                });
+                
+                // Show active view
+                const activeViewId = hash.replace('#', '') + '-view';
+                const activeView = document.getElementById(activeViewId);
+                if (activeView) {
+                    activeView.classList.remove('hidden');
+                    activeView.classList.add('block');
+                }
+
+                // Scroll to top automatically
+                window.scrollTo(0, 0);
+
+                // Update Desktop Nav Links styling
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('text-sky-400');
+                        link.classList.remove('text-slate-200');
+                    } else {
+                        link.classList.remove('text-sky-400');
+                        link.classList.add('text-slate-200');
+                    }
+                });
+
+                // Update Mobile Nav Links styling
+                document.querySelectorAll('.nav-link-mobile').forEach(link => {
+                    if (link.getAttribute('href') === hash) {
+                        link.classList.add('text-sky-400');
+                        link.classList.remove('text-slate-200');
+                    } else {
+                        link.classList.remove('text-sky-400');
+                        link.classList.add('text-slate-200');
+                    }
+                });
+            }
+        }
+
+        // Listen for hash changes from clicking links
+        window.addEventListener('hashchange', handleRouting);
+        
+        // Handle initial load
+        window.addEventListener('load', handleRouting);
     </script>
 </body>
 </html>
