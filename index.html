@@ -6,6 +6,11 @@
     <title>C Square Club | Chandigarh University</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -14,7 +19,6 @@
         
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #0f172a; /* Tailwind slate-900 */
         }
         
         .code-font { 
@@ -27,48 +31,52 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Subtle animated background grid */
+        /* Subtle animated background grid for Light and Dark */
         .bg-grid {
             background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        }
+        .dark .bg-grid {
             background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                               linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
         }
-        
-        /* Terminal Blinking Cursor */
-        .typing-cursor::after {
-            content: '█';
-            animation: blink 1s step-start infinite;
-            color: #38bdf8;
-            margin-left: 4px;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
-<body class="text-slate-200 antialiased">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 antialiased transition-colors duration-300">
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-800 transition-all duration-300">
+    <nav class="fixed w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50 border-b border-slate-200 dark:border-slate-800 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter text-white cursor-pointer flex items-center gap-3 code-font" onclick="window.location.hash='#home'">
-                    <img src="logo.png" alt="C Square Logo" class="w-9 h-9 object-cover rounded-md shadow-sm border border-slate-700">
-                    <span><span class="text-sky-400">&lt;</span>C_Square<span class="text-sky-400">/&gt;</span></span>
+                <div class="flex-shrink-0 font-bold text-2xl tracking-tighter text-slate-900 dark:text-white cursor-pointer flex items-center gap-3 code-font" onclick="window.location.hash='#home'">
+                    <img src="logo.png" alt="C Square Logo" class="w-9 h-9 object-cover rounded-md shadow-sm border border-slate-200 dark:border-slate-700">
+                    <span><span class="text-sky-500 dark:text-sky-400">&lt;</span>C_Square<span class="text-sky-500 dark:text-sky-400">/&gt;</span></span>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="nav-link text-sky-400 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#events" class="nav-link text-slate-200 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Events</a>
-                        <a href="#team" class="nav-link text-slate-200 hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Team</a>
-                        <a href="#contact" class="bg-sky-500/10 text-sky-400 hover:bg-sky-500 hover:text-white transition-all px-4 py-2 rounded-full text-sm font-semibold border border-sky-500/50">Join Us</a>
+                <div class="hidden md:flex items-center ml-10">
+                    <div class="flex items-baseline space-x-8 mr-8">
+                        <a href="#home" class="nav-link text-sky-500 dark:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#events" class="nav-link text-slate-600 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Events</a>
+                        <a href="#team" class="nav-link text-slate-600 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 transition-colors px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                        <a href="#contact" class="bg-sky-500/10 text-sky-600 dark:text-sky-400 hover:bg-sky-500 hover:text-white dark:hover:text-white transition-all px-4 py-2 rounded-full text-sm font-semibold border border-sky-500/30 dark:border-sky-500/50">Join Us</a>
                     </div>
+                    <!-- Theme Toggle Desktop -->
+                    <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-lg"></i>
+                    </button>
                 </div>
 
-                <!-- Mobile menu button -->
-                <div class="-mr-2 flex md:hidden">
-                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                <!-- Mobile menu buttons -->
+                <div class="-mr-2 flex items-center gap-2 md:hidden">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full text-slate-500 hover:text-sky-500 focus:outline-none">
+                        <i class="fa-solid fa-moon dark:hidden text-lg"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-lg"></i>
+                    </button>
+                    <button type="button" id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -76,11 +84,11 @@
         </div>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div class="md:hidden hidden bg-slate-900 border-b border-slate-800" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 code-font text-sm">
-                <a href="#home" class="nav-link-mobile block hover:bg-slate-800 text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/home</a>
-                <a href="#events" class="nav-link-mobile block hover:bg-slate-800 text-slate-200 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/events</a>
-                <a href="#team" class="nav-link-mobile block hover:bg-slate-800 text-slate-200 hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">~/team</a>
+        <div class="md:hidden hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-sm">
+                <a href="#home" class="nav-link-mobile block hover:bg-slate-100 dark:hover:bg-slate-800 text-sky-500 dark:text-sky-400 px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#events" class="nav-link-mobile block hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">Events</a>
+                <a href="#team" class="nav-link-mobile block hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-200 hover:text-sky-500 dark:hover:text-sky-400 px-3 py-2 rounded-md text-base font-medium">Team</a>
             </div>
         </div>
     </nav>
@@ -94,124 +102,133 @@
             <!-- Hero Section -->
             <section id="home" class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 flex items-center justify-center min-h-screen overflow-hidden bg-grid">
                 <!-- Glow effect behind hero -->
-                <div class="text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-sky-400 text-xs sm:text-sm font-medium mb-6 backdrop-blur-sm code-font">
-                        <span class="text-green-400">~</span> ./start_club.sh
-                    </div>
-                    
-                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
-                        <span class="text-slate-500 block text-2xl mb-2 code-font font-normal">// Initialize</span>
-                        Code. <span class="gradient-text">Create.</span> <br/>Conquer.
-                    </h1>
-                    
-                    <p class="mt-4 max-w-xl text-lg sm:text-xl text-slate-400 mb-10 leading-relaxed code-font typing-cursor">
-                        > Bridging the gap between academic learning and real-world application._
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
-                        <a href="#contact" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold py-3 px-8 rounded-md transition-all shadow-[0_0_20px_rgba(56,189,248,0.4)] hover:shadow-[0_0_30px_rgba(56,189,248,0.6)] flex items-center justify-center gap-2 code-font">
-                            > sudo join <i class="fa-solid fa-terminal ml-1"></i>
-                        </a>
-                        <a href="#events" class="bg-slate-800/80 hover:bg-slate-700 backdrop-blur-sm text-white font-semibold py-3 px-8 rounded-md transition-all border border-slate-700 flex items-center justify-center gap-2 code-font">
-                            cat events.txt
-                        </a>
-                    </div>
-                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-300/30 dark:bg-sky-500/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
-                <!-- Right: Mock Code Editor -->
-                <div class="hidden lg:block w-full">
-                    <div class="rounded-xl bg-[#1e1e1e] border border-slate-700 shadow-2xl overflow-hidden text-left code-font text-sm/relaxed transform hover:-translate-y-2 transition-transform duration-500">
-                        <div class="flex items-center px-4 py-3 bg-[#2d2d2d] border-b border-[#404040]">
-                            <div class="flex space-x-2">
-                                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                <div class="max-w-7xl mx-auto px-4 relative z-10 w-full">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        
+                        <!-- Left: Text -->
+                        <div class="text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-sky-600 dark:text-sky-400 text-xs sm:text-sm font-medium mb-6 backdrop-blur-sm shadow-sm">
+                                <span class="text-green-500 dark:text-green-400 code-font">~</span> <span class="code-font">./start_club.sh</span>
                             </div>
-                            <div class="mx-auto text-slate-400 text-xs">main.cpp - C_Square_Club</div>
+                            
+                            <h1 class="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
+                                Code. <span class="gradient-text">Create.</span> <br/>Conquer.
+                            </h1>
+                            
+                            <p class="mt-4 max-w-xl text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
+                                Bridging the gap between academic learning and real-world application. Join a community of developers, innovators, and problem-solvers.
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 dark:hover:bg-sky-400 text-white dark:text-slate-950 font-bold py-3 px-8 rounded-md transition-all shadow-[0_0_15px_rgba(56,189,248,0.3)] dark:shadow-[0_0_20px_rgba(56,189,248,0.4)] flex items-center justify-center gap-2">
+                                    Join the Club <i class="fa-solid fa-arrow-right ml-1"></i>
+                                </a>
+                                <a href="#events" class="bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 backdrop-blur-sm text-slate-700 dark:text-white font-semibold py-3 px-8 rounded-md transition-all border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2">
+                                    Explore Events
+                                </a>
+                            </div>
                         </div>
-                        <div class="p-6 text-slate-300 overflow-x-auto">
-                            <p><span class="text-pink-500">#include</span> <span class="text-green-400">&lt;iostream&gt;</span></p>
-                            <p><span class="text-pink-500">#include</span> <span class="text-green-400">&lt;club_resources&gt;</span></p>
-                            <br/>
-                            <p><span class="text-blue-400">int</span> <span class="text-[#dcdcaa]">main</span>() {</p>
-                            <p class="pl-8"><span class="text-[#4ec9b0]">Club</span>* c_square = <span class="text-pink-500">new</span> <span class="text-[#4ec9b0]">Club</span>(<span class="text-[#ce9178]">"Chandigarh University"</span>);</p>
-                            <br/>
-                            <p class="pl-8"><span class="text-blue-400">if</span> (student.isPassionate()) {</p>
-                            <p class="pl-16">c_square-><span class="text-[#dcdcaa]">addMember</span>(student);</p>
-                            <p class="pl-16">student.<span class="text-[#dcdcaa]">learnSkills</span>({<span class="text-[#ce9178]">"Dev"</span>, <span class="text-[#ce9178]">"DSA"</span>, <span class="text-[#ce9178]">"AI"</span>});</p>
-                            <p class="pl-8">}</p>
-                            <br/>
-                            <p class="pl-8">c_square-><span class="text-[#dcdcaa]">hostHackathon</span>(<span class="text-[#ce9178]">"Zinnovatio 3.0"</span>);</p>
-                            <p class="pl-8"><span class="text-pink-500">return</span> <span class="text-[#b5cea8]">0</span>;</p>
-                            <p>}</p>
+
+                        <!-- Right: Mock Code Editor -->
+                        <div class="hidden lg:block w-full">
+                            <div class="rounded-xl bg-slate-900 dark:bg-[#1e1e1e] border border-slate-700 dark:border-slate-800 shadow-2xl overflow-hidden text-left code-font text-sm/relaxed transform hover:-translate-y-2 transition-transform duration-500">
+                                <div class="flex items-center px-4 py-3 bg-slate-800 dark:bg-[#2d2d2d] border-b border-slate-700 dark:border-[#404040]">
+                                    <div class="flex space-x-2">
+                                        <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                        <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                    </div>
+                                    <div class="mx-auto text-slate-400 text-xs">main.cpp - C_Square_Club</div>
+                                </div>
+                                <div class="p-6 text-slate-300 overflow-x-auto">
+                                    <p><span class="text-pink-400 dark:text-pink-500">#include</span> <span class="text-green-400">&lt;iostream&gt;</span></p>
+                                    <p><span class="text-pink-400 dark:text-pink-500">#include</span> <span class="text-green-400">&lt;club_resources&gt;</span></p>
+                                    <br/>
+                                    <p><span class="text-sky-400 dark:text-blue-400">int</span> <span class="text-yellow-200 dark:text-[#dcdcaa]">main</span>() {</p>
+                                    <p class="pl-8"><span class="text-[#4ec9b0]">Club</span>* c_square = <span class="text-pink-400 dark:text-pink-500">new</span> <span class="text-[#4ec9b0]">Club</span>(<span class="text-orange-300 dark:text-[#ce9178]">"Chandigarh University"</span>);</p>
+                                    <br/>
+                                    <p class="pl-8"><span class="text-sky-400 dark:text-blue-400">if</span> (student.isPassionate()) {</p>
+                                    <p class="pl-16">c_square-><span class="text-yellow-200 dark:text-[#dcdcaa]">addMember</span>(student);</p>
+                                    <p class="pl-16">student.<span class="text-yellow-200 dark:text-[#dcdcaa]">learnSkills</span>({<span class="text-orange-300 dark:text-[#ce9178]">"Dev"</span>, <span class="text-orange-300 dark:text-[#ce9178]">"DSA"</span>, <span class="text-orange-300 dark:text-[#ce9178]">"AI"</span>});</p>
+                                    <p class="pl-8">}</p>
+                                    <br/>
+                                    <p class="pl-8">c_square-><span class="text-yellow-200 dark:text-[#dcdcaa]">hostHackathon</span>(<span class="text-orange-300 dark:text-[#ce9178]">"Zinnovatio 3.0"</span>);</p>
+                                    <p class="pl-8"><span class="text-pink-400 dark:text-pink-500">return</span> <span class="text-[#b5cea8]">0</span>;</p>
+                                    <p>}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Stats Section -->
+            <section class="py-16 border-y border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 code-font">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="bg-slate-50 dark:bg-[#1e1e1e] border border-slate-200 dark:border-slate-700 rounded-lg p-6 shadow-sm dark:shadow-lg">
+                        <p class="text-slate-400 dark:text-slate-500 mb-4">// fetch('/api/club_data.json')</p>
+                        <div class="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-loose">
+                            <span class="text-pink-500">const</span> <span class="text-teal-600 dark:text-[#4ec9b0]">c_square_stats</span> <span class="text-sky-500 dark:text-sky-400">=</span> {
+                            <div class="pl-6 py-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+                                <div><span class="text-sky-600 dark:text-sky-300">"active_members"</span>: <span class="text-green-600 dark:text-[#b5cea8]">500</span>,</div>
+                                <div><span class="text-sky-600 dark:text-sky-300">"events_hosted"</span>: <span class="text-green-600 dark:text-[#b5cea8]">20</span>,</div>
+                                <div><span class="text-sky-600 dark:text-sky-300">"projects_built"</span>: <span class="text-green-600 dark:text-[#b5cea8]">50</span>,</div>
+                                <div><span class="text-sky-600 dark:text-sky-300">"department"</span>: <span class="text-orange-500 dark:text-[#ce9178]">"CSE"</span></div>
+                            </div>
+                            };
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- About Stats Section -->
-    <section class="py-16 border-y border-slate-800 bg-slate-900/50 code-font">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-[#1e1e1e] border border-slate-700 rounded-lg p-6 shadow-lg transform transition-all hover:border-sky-500/30">
-                <p class="text-slate-500 mb-4">// fetch('/api/club_data.json')</p>
-                <div class="text-slate-300 text-sm sm:text-base leading-loose">
-                    <span class="text-pink-500">const</span> <span class="text-[#4ec9b0]">c_square_stats</span> <span class="text-sky-400">=</span> {
-                    <div class="pl-6 py-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
-                        <div><span class="text-sky-300">"active_members"</span>: <span class="text-[#b5cea8]">500</span>,</div>
-                        <div><span class="text-sky-300">"events_hosted"</span>: <span class="text-[#b5cea8]">20</span>,</div>
-                        <div><span class="text-sky-300">"projects_built"</span>: <span class="text-[#b5cea8]">50</span>,</div>
-                        <div><span class="text-sky-300">"department"</span>: <span class="text-[#ce9178]">"CSE"</span></div>
-                    </div>
-                    };
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
         </div>
 
         <!-- Events View -->
         <div id="events-view" class="page-view hidden">
 
             <!-- Events Section -->
-            <section id="events" class="pt-32 pb-24 bg-slate-950 relative min-h-screen">
+            <section id="events" class="pt-32 pb-24 bg-slate-50 dark:bg-slate-950 relative min-h-screen">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-16">
-            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
-                <!-- Zinnovatio Card -->
-                <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/10">
-                    <div class="w-16 h-16 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-laptop-code"></i>
+                        <h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Flagship <span class="text-sky-500 dark:text-sky-400">Events</span></h2>
+                        <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Discover the hackathons, workshops, and competitions where we turn ideas into reality.</p>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">Zinnovatio 3.0</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">Our premier 24-hour hackathon where brilliant minds clash to build innovative software and hardware solutions under high pressure.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="inline-block bg-slate-800 text-sky-300 text-xs px-3 py-1.5 rounded-md font-semibold code-font border border-slate-700">#HACKATHON</span>
-                        <a href="#" class="text-sky-400 hover:text-sky-300 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                            Learn more <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                        <!-- Zinnovatio Card -->
+                        <div class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 hover:border-sky-500/50 dark:hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-sky-500/10 dark:hover:shadow-sky-500/10">
+                            <div class="w-16 h-16 bg-sky-100 dark:bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-500 dark:text-sky-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">Zinnovatio 3.0</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">Our premier 24-hour hackathon where brilliant minds clash to build innovative software and hardware solutions under high pressure.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-block bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-300 text-xs px-3 py-1.5 rounded-md font-semibold code-font border border-slate-200 dark:border-slate-700">#HACKATHON</span>
+                                <a href="#" class="text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                    Learn more <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                <!-- IDEAT-A-THON Card -->
-                <div class="group bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-sky-500/10">
-                    <div class="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-lightbulb"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-3">IDEAT-A-THON 2025</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">A massive national-level pitching event. Pitch your solutions to real-world problems and bring your startup ideas to life through live presentations.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="inline-block bg-slate-800 text-purple-300 text-xs px-3 py-1.5 rounded-md font-semibold code-font border border-slate-700">#IDEATION</span>
-                        <a href="#" class="text-purple-400 hover:text-purple-300 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-                            Learn more <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+                        <!-- IDEAT-A-THON Card -->
+                        <div class="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 hover:border-sky-500/50 dark:hover:border-sky-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-sky-500/10 dark:hover:shadow-sky-500/10">
+                            <div class="w-16 h-16 bg-purple-100 dark:bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-500 dark:text-purple-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">IDEAT-A-THON 2025</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">A massive national-level pitching event. Pitch your solutions to real-world problems and bring your startup ideas to life through live presentations.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-block bg-slate-100 dark:bg-slate-800 text-purple-600 dark:text-purple-300 text-xs px-3 py-1.5 rounded-md font-semibold code-font border border-slate-200 dark:border-slate-700">#IDEATION</span>
+                                <a href="#" class="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                                    Learn more <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
         </div>
 
         <!-- Team View -->
@@ -221,69 +238,67 @@
             <section id="team" class="pt-32 pb-24 relative overflow-hidden min-h-screen">
                 <!-- Background accents -->
                 <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-                <p class="text-slate-500 max-w-2xl mx-auto code-font text-sm">/* The minds driving the technical vision and operations of C Square. */</p>
-            </div>
-            
-            <div class="flex justify-center">
-                <!-- Profile Card (Vaibhav) -->
-                <div class="bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 max-w-sm w-full hover:border-sky-500/50 transition-all group">
-                    <div class="w-32 h-32 bg-slate-800 rounded-full mx-auto mb-6 flex items-center justify-center text-5xl text-slate-500 border-4 border-slate-700 group-hover:border-sky-500/50 transition-colors shadow-xl overflow-hidden relative">
-                        <!-- Placeholder for actual image -->
-                        <i class="fa-solid fa-user-astronaut text-slate-400 relative z-10"></i>
-                        <div class="absolute inset-0 bg-gradient-to-tr from-sky-500/20 to-purple-500/20 z-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                    <div class="mb-16">
+                        <h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">Meet the <span class="text-sky-500 dark:text-sky-400">Leadership</span></h2>
+                        <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">The minds driving the technical vision and operations of C Square.</p>
                     </div>
                     
-                    <h3 class="text-2xl font-bold text-white mb-1">Vaibhav Kushwaha</h3>
-                    <p class="text-sky-400 font-semibold mb-4 text-sm tracking-wide uppercase">Secretary & Student Lead</p>
-                    
-                    <p class="text-slate-400 text-sm mb-8 leading-relaxed">
-                        Leading the technical vision and managing club operations. Dedicated to building a robust coding ecosystem at Chandigarh University.
-                    </p>
-                    
-                    <div class="flex justify-center space-x-5">
-                        <a href="https://www.linkedin.com/in/professorauggie/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-300 hover:bg-[#0a66c2] hover:text-white transition-all transform hover:-translate-y-1">
-                            <i class="fa-brands fa-linkedin-in text-lg"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-300 hover:bg-slate-600 hover:text-white transition-all transform hover:-translate-y-1">
-                            <i class="fa-brands fa-github text-lg"></i>
-                        </a>
-                        <a href="mailto:contact@csquare.cu" class="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-slate-300 hover:bg-sky-500 hover:text-white transition-all transform hover:-translate-y-1">
-                            <i class="fa-solid fa-envelope text-lg"></i>
-                        </a>
+                    <div class="flex justify-center">
+                        <!-- Profile Card (Vaibhav) -->
+                        <div class="bg-white dark:bg-slate-800/40 backdrop-blur-sm border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-sm w-full hover:border-sky-500/50 dark:hover:border-sky-500/50 transition-all shadow-md dark:shadow-none group">
+                            <div class="w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-full mx-auto mb-6 flex items-center justify-center text-5xl text-slate-400 dark:text-slate-500 border-4 border-slate-200 dark:border-slate-700 group-hover:border-sky-500/50 dark:group-hover:border-sky-500/50 transition-colors shadow-lg overflow-hidden relative">
+                                <!-- Placeholder for actual image -->
+                                <i class="fa-solid fa-user-astronaut text-slate-400 relative z-10"></i>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-sky-500/10 to-purple-500/10 dark:from-sky-500/20 dark:to-purple-500/20 z-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                            
+                            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">Vaibhav Kushwaha</h3>
+                            <p class="text-sky-600 dark:text-sky-400 font-semibold mb-4 text-sm tracking-wide uppercase">Secretary & Student Lead</p>
+                            
+                            <p class="text-slate-600 dark:text-slate-400 text-sm mb-8 leading-relaxed">
+                                Leading the technical vision and managing club operations. Dedicated to building a robust coding ecosystem at Chandigarh University.
+                            </p>
+                            
+                            <div class="flex justify-center space-x-5">
+                                <a href="https://www.linkedin.com/in/professorauggie/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-[#0a66c2] hover:text-white dark:hover:bg-[#0a66c2] dark:hover:text-white transition-all transform hover:-translate-y-1">
+                                    <i class="fa-brands fa-linkedin-in text-lg"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-600 dark:hover:text-white transition-all transform hover:-translate-y-1">
+                                    <i class="fa-brands fa-github text-lg"></i>
+                                </a>
+                                <a href="mailto:contact@csquare.cu" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700/50 flex items-center justify-center text-slate-500 dark:text-slate-300 hover:bg-sky-500 hover:text-white dark:hover:bg-sky-500 dark:hover:text-white transition-all transform hover:-translate-y-1">
+                                    <i class="fa-solid fa-envelope text-lg"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="mt-12 code-font text-3xl md:text-5xl text-white font-bold">}</div>
-            
-            <div class="mt-6 code-font">
-                <p class="text-slate-500 text-sm">// Want to join the core team? <a href="#contact" class="text-sky-400 hover:underline">Reach out to us.</a></p>
-            </div>
-        </div>
-    </section>
+            </section>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer id="contact" class="bg-slate-950 pt-16 pb-8 border-t border-slate-800">
+    <footer id="contact" class="bg-slate-100 dark:bg-slate-950 pt-16 pb-8 border-t border-slate-200 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-3 gap-12 mb-12">
                 
                 <!-- Brand -->
                 <div class="md:col-span-1">
-                    <div class="flex items-center gap-3 font-bold text-2xl tracking-tighter text-white mb-4">
-                        <img src="logo.png" alt="C Square Logo" class="w-8 h-8 object-cover rounded-md shadow-sm border border-slate-700">
-                        <span><span class="text-sky-400">C</span> Square<span class="text-sky-400">_</span></span>
+                    <div class="flex items-center gap-3 font-bold text-2xl tracking-tighter text-slate-900 dark:text-white mb-4 code-font">
+                        <img src="logo.png" alt="C Square Logo" class="w-8 h-8 object-cover rounded-md shadow-sm border border-slate-200 dark:border-slate-700">
+                        <span><span class="text-sky-500 dark:text-sky-400">&lt;</span>C_Square<span class="text-sky-500 dark:text-sky-400">/&gt;</span></span>
                     </div>
-                    <p class="text-slate-400 text-sm mb-6 max-w-xs leading-relaxed">
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mb-6 max-w-xs leading-relaxed">
                         The official CSE Departmental Technical Club of Chandigarh University, fostering innovation and technical excellence.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="https://www.instagram.com/csquare_club/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-[#E1306C] hover:border-[#E1306C] transition-all">
+                        <a href="https://www.instagram.com/csquare_club/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-[#E1306C] hover:border-[#E1306C] dark:hover:text-[#E1306C] dark:hover:border-[#E1306C] transition-all">
                             <i class="fa-brands fa-instagram text-xl"></i>
                         </a>
-                        <a href="https://www.linkedin.com/company/csquare-club/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-[#0a66c2] hover:border-[#0a66c2] transition-all">
+                        <a href="https://www.linkedin.com/company/csquare-club/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-[#0a66c2] hover:border-[#0a66c2] dark:hover:text-[#0a66c2] dark:hover:border-[#0a66c2] transition-all">
                             <i class="fa-brands fa-linkedin-in text-xl"></i>
                         </a>
                     </div>
@@ -291,36 +306,72 @@
 
                 <!-- Links -->
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm text-slate-400">
-                        <li><a href="#home" class="hover:text-sky-400 transition-colors">Home</a></li>
-                        <li><a href="#events" class="hover:text-sky-400 transition-colors">Upcoming Events</a></li>
-                        <li><a href="#team" class="hover:text-sky-400 transition-colors">Core Team</a></li>
-                        <li><a href="#" class="hover:text-sky-400 transition-colors">Projects</a></li>
+                    <h4 class="text-slate-900 dark:text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                        <li><a href="#home" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Home</a></li>
+                        <li><a href="#events" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Upcoming Events</a></li>
+                        <li><a href="#team" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Core Team</a></li>
+                        <li><a href="#" class="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">Projects</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact -->
                 <div>
-                    <h4 class="text-white font-semibold mb-4">Visit Us</h4>
-                    <ul class="space-y-3 text-sm text-slate-400">
+                    <h4 class="text-slate-900 dark:text-white font-semibold mb-4">Visit Us</h4>
+                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
                         <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-location-dot mt-1 text-sky-400"></i>
+                            <i class="fa-solid fa-location-dot mt-1 text-sky-500 dark:text-sky-400"></i>
                             <span>Chandigarh University<br/>NH-95, Chandigarh-Ludhiana Highway,<br/>Gharuan, Mohali, Punjab</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500">
+            <div class="pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500">
                 <p>&copy; 2026 C Square Club. All rights reserved.</p>
                 <p class="mt-2 md:mt-0">Designed & Built by the Core Team.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Simple Script for Mobile Menu Toggle -->
+    <!-- Scripts -->
     <script>
+        // --- Dark/Light Mode Logic ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+        
+        // Check local storage or system preference on load
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleTheme() {
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+
+        // --- Mobile Menu Logic ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
 
@@ -328,7 +379,6 @@
             menu.classList.toggle('hidden');
         });
 
-        // Close mobile menu when a link is clicked
         const mobileLinks = menu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -342,13 +392,11 @@
         function handleRouting() {
             let hash = window.location.hash;
             
-            // Default to home if no hash or invalid direct page hash
             if (!hash) {
                 hash = '#home';
                 window.history.replaceState(null, null, '#home');
             }
 
-            // Only switch views if the hash matches a page route
             if (pageRoutes.includes(hash)) {
                 // Hide all views
                 document.querySelectorAll('.page-view').forEach(view => {
@@ -364,37 +412,33 @@
                     activeView.classList.add('block');
                 }
 
-                // Scroll to top automatically
                 window.scrollTo(0, 0);
 
-                // Update Desktop Nav Links styling
+                // Update Desktop Nav Links
                 document.querySelectorAll('.nav-link').forEach(link => {
                     if (link.getAttribute('href') === hash) {
-                        link.classList.add('text-sky-400');
-                        link.classList.remove('text-slate-200');
+                        link.classList.add('text-sky-500', 'dark:text-sky-400');
+                        link.classList.remove('text-slate-600', 'dark:text-slate-200');
                     } else {
-                        link.classList.remove('text-sky-400');
-                        link.classList.add('text-slate-200');
+                        link.classList.remove('text-sky-500', 'dark:text-sky-400');
+                        link.classList.add('text-slate-600', 'dark:text-slate-200');
                     }
                 });
 
-                // Update Mobile Nav Links styling
+                // Update Mobile Nav Links
                 document.querySelectorAll('.nav-link-mobile').forEach(link => {
                     if (link.getAttribute('href') === hash) {
-                        link.classList.add('text-sky-400');
-                        link.classList.remove('text-slate-200');
+                        link.classList.add('text-sky-500', 'dark:text-sky-400');
+                        link.classList.remove('text-slate-600', 'dark:text-slate-200');
                     } else {
-                        link.classList.remove('text-sky-400');
-                        link.classList.add('text-slate-200');
+                        link.classList.remove('text-sky-500', 'dark:text-sky-400');
+                        link.classList.add('text-slate-600', 'dark:text-slate-200');
                     }
                 });
             }
         }
 
-        // Listen for hash changes from clicking links
         window.addEventListener('hashchange', handleRouting);
-        
-        // Handle initial load
         window.addEventListener('load', handleRouting);
     </script>
 </body>
